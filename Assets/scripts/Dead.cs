@@ -22,7 +22,7 @@ public class Dead : MonoBehaviour
         Debug.Log(col.name);
 
 
-        if(col.name = "Personaje")
+        if(col.gameObject.name == "Personaje")
         {
 
         }
