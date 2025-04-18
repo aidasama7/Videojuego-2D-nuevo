@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class fuegoScript : MonoBehaviour
 {
+
+    GameObject personaje;
+
+    bool bolaDerecha = true;
+
+    public float speedBala = 2.0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        personaje = GameObject.Find("Personaje");
+        bolaDerecha = movPersonaje.miraDerecha;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-       transform.Translate(0.01f, 0, 0);
+        
+        if (bolaDerecha){
+            transform.Translate(speedBala * Time.deltaTime, 0, 0, Space.World);
+        }else{
+            transform.Translate((speedBala * Time.deltaTime) * -1, 0, 0, Space.World);
+        }
+        
+        
 
     }
 }

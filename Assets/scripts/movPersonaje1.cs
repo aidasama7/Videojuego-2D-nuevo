@@ -9,6 +9,8 @@ public class movPersonaje : MonoBehaviour
 
     private bool puedoSaltar = true;
 
+    public static bool miraDerecha = true;
+
     private Rigidbody2D rb;
     private Animator animatorController;
 
@@ -40,10 +42,12 @@ public class movPersonaje : MonoBehaviour
         if (movTeclas < 0)
         {
             this.GetComponent<SpriteRenderer>().flipX = true;
+            miraDerecha = false;
         }
         else if (movTeclas > 0)
         {
             this.GetComponent<SpriteRenderer>().flipX = false;
+            miraDerecha = true;
         }
 
         // Animación caminando
