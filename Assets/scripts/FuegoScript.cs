@@ -21,14 +21,29 @@ public class fuegoScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (bolaDerecha){
             transform.Translate(speedBala * Time.deltaTime, 0, 0, Space.World);
         }else{
             transform.Translate((speedBala * Time.deltaTime) * -1, 0, 0, Space.World);
         }
-        
-        
+    }
+
+    void OnTriggerEnter2D(Collider2D col){
+
+
+        //Debug.Log(col.gameObject.name.StartsWith("Fantasma"));
+
+        if(col.gameObject.tag == "Enemigo"){
+                Destroy(col.gameObject);
+                Destroy(this.gameObject);
+        }
+
+        /*
+        if(col.gameObject.name.StartsWith("Fantasma")){
+            Destroy(col.gameObject);
+        }
+        */
 
     }
+
 }
