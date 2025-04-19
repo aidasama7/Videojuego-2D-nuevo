@@ -573,7 +573,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 856588f363e649c44b0c117fe222c7fa, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5611,7 +5611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 59861777008933320, guid: 3f5254e12021a924a8bb69f5ee71ce1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1312609
+      value: 7.76
       objectReference: {fileID: 0}
     - target: {fileID: 59861777008933320, guid: 3f5254e12021a924a8bb69f5ee71ce1e, type: 3}
       propertyPath: m_LocalPosition.z
