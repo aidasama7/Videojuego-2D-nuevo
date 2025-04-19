@@ -11,11 +11,17 @@ public class fuegoScript : MonoBehaviour
 
     public float speedBala = 2.0f;
 
+    float tiempoDestruccion = 5.0f;
+
+    float queHoraEs;
+
     // Start is called before the first frame update
     void Start()
     {
         personaje = GameObject.Find("Personaje");
         bolaDerecha = movPersonaje.miraDerecha;
+
+        queHoraEs = Time.time; // 8
     }
 
     // Update is called once per frame
@@ -26,6 +32,11 @@ public class fuegoScript : MonoBehaviour
         }else{
             transform.Translate((speedBala * Time.deltaTime) * -1, 0, 0, Space.World);
         }
+
+        if(Time.time >= queHoraEs+tiempoDestruccion){
+            Destroy(this.gameObject);
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D col){
@@ -35,6 +46,9 @@ public class fuegoScript : MonoBehaviour
 
         if(col.gameObject.tag == "Enemigo"){
                 Destroy(col.gameObject);
+
+                GameManager.muertes +=1;
+
                 Destroy(this.gameObject);
         }
 
