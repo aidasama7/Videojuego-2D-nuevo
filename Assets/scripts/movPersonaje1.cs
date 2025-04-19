@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class movPersonaje : MonoBehaviour
 {
-    public float multiplicador = 5f;
-    public float multiplicadorSalto = 5f;
+    public float velocidad = 5f;
+    private float multiplicador = 5f;
+    private float multiplicadorSalto = 5f;
+
+    float movTeclas;
 
     private bool puedoSaltar = true;
+
+    private bool activaSaltoFixed = false;
 
     public static bool miraDerecha = true;
 
@@ -28,7 +33,7 @@ public class movPersonaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float movTeclas = Input.GetAxis("Horizontal");
+        movTeclas = Input.GetAxis("Horizontal");
 
         if(GameManager.estoyMuerto) return;
 
@@ -36,7 +41,9 @@ public class movPersonaje : MonoBehaviour
         Debug.Log(Time.deltaTime);
 
         // Movimiento con Rigidbody2D
-        rb.velocity = new Vector2(movTeclas * multiplicador, rb.velocity.y);
+        movTeclas = Input.GetAxis("Horizontal"); //(a -1 - d 1f)
+        //float movTeclasY = Input.GetAxis("Vertical"); //(a -1 - d 1f)
+
 
         // Flip sprite
         if (movTeclas < 0)
@@ -62,10 +69,14 @@ public class movPersonaje : MonoBehaviour
         // Saltar
         if (Input.GetKeyDown(KeyCode.Space) && puedoSaltar)
         {
+            activaSaltoFixed = true;
+            //PuedoSaltarFixed
+            /*
             rb.AddForce(
                 new Vector2(0, multiplicadorSalto),
                 ForceMode2D.Impulse
             );
+            */
         }
 
         // Si cae de la pantalla
@@ -82,8 +93,19 @@ public class movPersonaje : MonoBehaviour
             GameManager.estoyMuerto = true;
 
         }
+    }
 
+    void FixedUpdate(){
 
+        rb.velocity = new Vector2(movTeclas*multiplicador, rb.velocity.y);
+
+        if(activaSaltoFixed == true){
+            rb.AddForce(
+                new Vector2(0, multiplicadorSalto),
+                ForceMode2D.Impulse
+            );
+            activaSaltoFixed = false;
+        }
 
     }
 
