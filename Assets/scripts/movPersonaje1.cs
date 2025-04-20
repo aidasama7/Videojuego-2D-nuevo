@@ -20,6 +20,10 @@ public class movPersonaje : MonoBehaviour
     private Animator animatorController;
 
     public GameObject respawn;
+    private bool primerRespawnHecho = false;
+
+    bool soyAzul;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,7 @@ public class movPersonaje : MonoBehaviour
         animatorController = this.GetComponent<Animator>();
         respawn = GameObject.Find("Respawn");
         Respawnear();
+
     }
 
     // Update is called once per frame
@@ -109,12 +114,35 @@ public class movPersonaje : MonoBehaviour
 
     }
 
-    public void Respawnear(){
-
-        Debug.Log("vidas: "+GameManager.vidas);
-        GameManager.vidas = GameManager.vidas -1;
-        Debug.Log("vidas: "+GameManager.vidas);
+    public void Respawnear()
+    {
+        if (primerRespawnHecho)
+        {
+            GameManager.vidas = GameManager.vidas - 1;
+            Debug.Log("vida perdida, quedan: " + GameManager.vidas);
+        }
+        else
+        {
+            primerRespawnHecho = true;
+            Debug.Log("primer respawn sin perder vida");
+        }
 
         transform.position = respawn.transform.position;
     }
+
+    public void CambiarColor(){
+
+        if(soyAzul){
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+            soyAzul = false;
+        }else{
+            this.GetComponent<SpriteRenderer>().color = Color.blue;
+            soyAzul = true;
+        }
+
+
+    }
+
+
+
 }
