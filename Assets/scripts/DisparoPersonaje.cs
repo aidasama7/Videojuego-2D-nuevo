@@ -18,6 +18,7 @@ public GameObject fuego;
     {
         if(Input.GetKeyDown(KeyCode.E)){
 
+            AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fxFire);
             Instantiate(fuego, transform.position, Quaternion.identity);
 
         }
