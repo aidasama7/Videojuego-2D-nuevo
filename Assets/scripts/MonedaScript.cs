@@ -26,7 +26,7 @@ public class monedaScript : MonoBehaviour
         if(col.CompareTag("Player")){
             GameManager.puntos += 1;
             miAnimadorController.SetBool("monedaDestruir", true);
-
+            AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fxCoin);
             Destroy(this.gameObject, 1f);
         }
     }

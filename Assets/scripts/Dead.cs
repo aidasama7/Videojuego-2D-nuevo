@@ -31,7 +31,8 @@ public class Dead : MonoBehaviour
 {
     if (col.CompareTag("Player") && personajeScript != null)
     {
-        Debug.Log("¡Tocó las spikes!");
+        AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fxDead);
+        Debug.Log("Ha tocado las spikes");
         personajeScript.Respawnear();
     }
 }

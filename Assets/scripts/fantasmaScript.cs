@@ -10,6 +10,8 @@ public class fantasmaScript : MonoBehaviour
 
     public float velocidadFantasma = 10.0f;
 
+    AudioSource _audioSource;
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,8 @@ public class fantasmaScript : MonoBehaviour
         posicionInicial = transform.position;
         //personaje = GameObject.Find("Personaje");
         personaje = GameObject.FindGameObjectWithTag("Player");
+
+        _audioSource = this.GetComponent <AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,12 +35,23 @@ public class fantasmaScript : MonoBehaviour
             //Acción!!!+
             Debug.DrawLine(transform.position, personaje.transform.position, Color.red,2.5f);
             transform.position = Vector3.MoveTowards(transform.position, personaje.transform.position, velocidadFinal);
+
+            if(_audioSource.isPlaying == false){
+                _audioSource.Play();
+            }
+
         }
         else
         {
             transform.position = Vector3.MoveTowards(transform.position, posicionInicial, velocidadFinal);
             //Vuelta a casa
             Debug.DrawLine(transform.position, personaje.transform.position, Color.white, 2.5f);
+
+            if((transform.position == posicionInicial) && _audioSource.isPlaying == true){
+                _audioSource.Stop();
+                Debug.Log("STOP!!");
+
+            }
         }
 
 

@@ -87,6 +87,7 @@ public class movPersonaje : MonoBehaviour
         // Si cae de la pantalla
         if (transform.position.y <= -7)
         {
+            AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fxDead);
             Respawnear();
         }
 
