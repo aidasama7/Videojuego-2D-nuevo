@@ -11,7 +11,6 @@ public class movPersonaje : MonoBehaviour
     float movTeclas;
 
     private bool puedoSaltar = true;
-
     private bool activaSaltoFixed = false;
 
     public static bool miraDerecha = true;
@@ -24,41 +23,31 @@ public class movPersonaje : MonoBehaviour
 
     bool soyAzul;
 
+    public PlataformaEnMovimiento plataforma;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animatorController = this.GetComponent<Animator>();
+        animatorController = GetComponent<Animator>();
         respawn = GameObject.Find("Respawn");
         Respawnear();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         movTeclas = Input.GetAxis("Horizontal");
 
-        if(GameManager.estoyMuerto) return;
-
-        float miDeltaTime = Time.deltaTime;
-        Debug.Log(Time.deltaTime);
-
-        // Movimiento con Rigidbody2D
-        movTeclas = Input.GetAxis("Horizontal"); //(a -1 - d 1f)
-        //float movTeclasY = Input.GetAxis("Vertical"); //(a -1 - d 1f)
-
+        if (GameManager.estoyMuerto) return;
 
         // Flip sprite
         if (movTeclas < 0)
         {
-            this.GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = true;
             miraDerecha = false;
         }
         else if (movTeclas > 0)
         {
-            this.GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().flipX = false;
             miraDerecha = true;
         }
 
@@ -68,58 +57,49 @@ public class movPersonaje : MonoBehaviour
         // Comprobar si está tocando el suelo
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.5f);
         Debug.DrawRay(transform.position, Vector2.down, Color.magenta);
-
         puedoSaltar = hit.collider != null;
 
         // Saltar
         if (Input.GetKeyDown(KeyCode.Space) && puedoSaltar)
         {
             activaSaltoFixed = true;
-            //PuedoSaltarFixed
-            /*
-            rb.AddForce(
-                new Vector2(0, multiplicadorSalto),
-                ForceMode2D.Impulse
-            );
-            */
         }
 
-        // Si cae de la pantalla
+        // Si cae fuera de la pantalla
         if (transform.position.y <= -7)
         {
             AudioManager.Instance.SonarClipUnaVez(AudioManager.Instance.fxDead);
             Respawnear();
         }
 
-
-        // 0 vidas
-
-        if(GameManager.vidas <= 0)
+        if (GameManager.vidas <= 0)
         {
             GameManager.estoyMuerto = true;
-
         }
     }
 
-    void FixedUpdate(){
+    void FixedUpdate()
+    {
+        rb.velocity = new Vector2(movTeclas * multiplicador, rb.velocity.y);
 
-        rb.velocity = new Vector2(movTeclas*multiplicador, rb.velocity.y);
-
-        if(activaSaltoFixed == true){
-            rb.AddForce(
-                new Vector2(0, multiplicadorSalto),
-                ForceMode2D.Impulse
-            );
+        if (activaSaltoFixed)
+        {
+            rb.AddForce(new Vector2(0, multiplicadorSalto), ForceMode2D.Impulse);
             activaSaltoFixed = false;
         }
-
     }
 
     public void Respawnear()
     {
+        if (plataforma != null)
+        {
+            Debug.Log("Reiniciando plataforma...");
+            plataforma.ReiniciarPosicion();
+        }
+
         if (primerRespawnHecho)
         {
-            GameManager.vidas = GameManager.vidas - 1;
+            GameManager.vidas--;
             Debug.Log("vida perdida, quedan: " + GameManager.vidas);
         }
         else
@@ -130,20 +110,17 @@ public class movPersonaje : MonoBehaviour
 
         transform.position = respawn.transform.position;
     }
-
-    public void CambiarColor(){
-
-        if(soyAzul){
-            this.GetComponent<SpriteRenderer>().color = Color.white;
+    public void CambiarColor()
+    {
+        if (soyAzul)
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
             soyAzul = false;
-        }else{
-            this.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = Color.blue;
             soyAzul = true;
         }
-
-
     }
-
-
-
 }

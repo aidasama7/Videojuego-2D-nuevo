@@ -9,7 +9,7 @@ public class fuegoScript : MonoBehaviour
 
     bool bolaDerecha = true;
 
-    public float speedBala = 2.0f;
+    public float speedBala = 4.0f;
 
     float tiempoDestruccion = 5.0f;
 

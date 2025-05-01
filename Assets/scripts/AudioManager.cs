@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip fxDead;
     public AudioClip fxFire;
 
+    public AudioClip fxCofre;
+
     AudioSource _audioSource;
 
 
@@ -38,13 +40,8 @@ public class AudioManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void SonarClipUnaVez(AudioClip ac)
     {
-        
-    }
-
-    //método para hacer sonar clips de audio
-    public void SonarClipUnaVez(AudioClip ac){
             _audioSource.PlayOneShot(ac);
     }
 
